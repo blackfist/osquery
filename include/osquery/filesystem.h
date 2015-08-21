@@ -61,6 +61,18 @@ Status readFile(const boost::filesystem::path& path,
 Status readFile(const boost::filesystem::path& path);
 
 /**
+ * @brief Read an environment variable.
+ *
+ * @param env the name of the environment variable that you would like to read.
+ * @param content a reference to a string which will be populated with the
+ * contents of the environment variable indicated by the path parameter.
+ *
+ * @return an instance of Status, indicating success or failure.
+ */
+Status readENV(const std::string& env,
+                std::string& content);
+                
+/**
  * @brief Write text to disk.
  *
  * @param path the path of the file that you would like to write.

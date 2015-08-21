@@ -131,6 +131,12 @@ Status readFile(const fs::path& path) {
   return readFile(path, blank, true);
 }
 
+Status readENV(const std::string& env, std::string& content) {
+  content.erase();
+  content.assign(std::getenv(env.c_str()));
+  return Status(0, "OK");
+}
+
 Status isWritable(const fs::path& path) {
   auto path_exists = pathExists(path);
   if (!path_exists.ok()) {

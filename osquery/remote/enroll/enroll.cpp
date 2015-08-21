@@ -29,6 +29,12 @@ CLI_FLAG(string,
          "",
          "Path to an optional client enrollment-auth secret");
 
+/// Name of optional environment variable holding enrollment secret data.
+CLI_FLAG(string,
+         enroll_secret_env,
+         "",
+         "Name of environment variable holding enrollment-auth secret");
+
 std::string getNodeKey(const std::string& enroll_plugin, bool force) {
   std::string node_key;
   getDatabaseValue(kPersistentSettings, "nodeKey", node_key);
@@ -57,8 +63,13 @@ std::string getNodeKey(const std::string& enroll_plugin, bool force) {
 
 std::string getEnrollSecret() {
   std::string enrollment_secret;
-  osquery::readFile(FLAGS_enroll_secret_path, enrollment_secret);
-  boost::trim(enrollment_secret);
+  if (FLAGS_enroll_secret_path!= "") {
+    osquery::readFile(FLAGS_enroll_secret_path, enrollment_secret);
+    boost::trim(enrollment_secret);
+  }
+  else {
+    osquery::readENV(FLAGS_enroll_secret_env, enrollment_secret);
+  }
   return enrollment_secret;
 }
 
