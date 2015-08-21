@@ -132,8 +132,12 @@ Status readFile(const fs::path& path) {
 }
 
 Status readENV(const std::string& env, std::string& content) {
+  auto tempValue = std::getenv(env.c_str());
+  if (!tempValue) {
+    return Status(1, "Error reading environment variable: " + env);
+  }
   content.erase();
-  content.assign(std::getenv(env.c_str()));
+  content.assign(tempValue);
   return Status(0, "OK");
 }
 
