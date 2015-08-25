@@ -73,7 +73,7 @@ std::string getEnrollSecret() {
     else {
       const char* env_secret = std::getenv(FLAGS_enroll_secret_env);
       if (env_secret) {
-        secret = std::string(env_secret);
+        enrollment_secret = std::string(env_secret);
       }
     }
   }
