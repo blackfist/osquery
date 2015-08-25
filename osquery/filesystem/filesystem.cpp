@@ -131,16 +131,6 @@ Status readFile(const fs::path& path) {
   return readFile(path, blank, true);
 }
 
-Status readENV(const std::string& env, std::string& content) {
-  auto tempValue = std::getenv(env.c_str());
-  if (!tempValue) {
-    return Status(1, "Error reading environment variable: " + env);
-  }
-  content.erase();
-  content.assign(tempValue);
-  return Status(0, "OK");
-}
-
 Status isWritable(const fs::path& path) {
   auto path_exists = pathExists(path);
   if (!path_exists.ok()) {

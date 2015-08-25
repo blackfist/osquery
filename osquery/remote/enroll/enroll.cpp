@@ -62,14 +62,22 @@ std::string getNodeKey(const std::string& enroll_plugin, bool force) {
 }
 
 std::string getEnrollSecret() {
-  std::string enrollment_secret;
-  if (FLAGS_enroll_secret_path!= "") {
-    osquery::readFile(FLAGS_enroll_secret_path, enrollment_secret);
-    boost::trim(enrollment_secret);
+  static std::string enrollment_secret;
+
+  if (secret.size() == 0) {
+    // Secret has not been read
+    if (FLAGS_enroll_secret_path!= "") {
+      osquery::readFile(FLAGS_enroll_secret_path, enrollment_secret);
+      boost::trim(enrollment_secret);
+    }
+    else {
+      const char* env_secret = std::getenv(FLAGS_enroll_secret_env);
+      if (env_secret) {
+        secret = std::string(env_secret);
+      }
+    }
   }
-  else {
-    osquery::readENV(FLAGS_enroll_secret_env, enrollment_secret);
-  }
+
   return enrollment_secret;
 }
 
