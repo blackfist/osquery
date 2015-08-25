@@ -58,6 +58,7 @@ TEST_F(EnrollTests, test_enroll_key_retrieval) {
   FLAGS_disable_enrollment = false;
   EXPECT_EQ(getNodeKey("test_simple"), "fetched_a_node_key");
 
+  DECLARE_string(FLAGS_enroll_secret_env);
   FLAGS_enroll_secret_env = "simple_enroll";
   EXPECT_EQ(getEnrollSecret(), "simple_enroll");
 }
