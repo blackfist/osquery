@@ -64,14 +64,14 @@ std::string getNodeKey(const std::string& enroll_plugin, bool force) {
 std::string getEnrollSecret() {
   static std::string enrollment_secret;
 
-  if (secret.size() == 0) {
+  if (enrollment_secret.size() == 0) {
     // Secret has not been read
     if (FLAGS_enroll_secret_path!= "") {
       osquery::readFile(FLAGS_enroll_secret_path, enrollment_secret);
       boost::trim(enrollment_secret);
     }
     else {
-      const char* env_secret = std::getenv(FLAGS_enroll_secret_env);
+      const char* env_secret = std::getenv(FLAGS_enroll_secret_env.c_str());
       if (env_secret) {
         enrollment_secret = std::string(env_secret);
       }
