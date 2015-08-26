@@ -66,13 +66,12 @@ std::string getEnrollSecret() {
 
   if (enrollment_secret.size() == 0) {
     // Secret has not been read
-    if (FLAGS_enroll_secret_path!= "") {
+    if (FLAGS_enroll_secret_path != "") {
       osquery::readFile(FLAGS_enroll_secret_path, enrollment_secret);
       boost::trim(enrollment_secret);
-    }
-    else {
+    } else {
       const char* env_secret = std::getenv(FLAGS_enroll_secret_env.c_str());
-      if (env_secret) {
+      if (env_secret != nullptr) {
         enrollment_secret = std::string(env_secret);
       }
     }
